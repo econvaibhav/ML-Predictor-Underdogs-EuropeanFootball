@@ -304,3 +304,15 @@ is_win <- is_win %>%
   )
 
 final_df <- merge(df, is_win, by = c('player_id','Year'))
+
+
+library(lubridate)
+
+final_df3 <- final_df %>%
+  separate(date_of_birth, into = c("Year_birth", "Month", "Day"), sep = "\\-")
+
+final_df3 <- final_df3 %>% 
+  select(-Month, -Day)
+
+final_df3$Age <- as.numeric(final_df3$Year) - as.numeric(final_df3$Year_birth) 
+
