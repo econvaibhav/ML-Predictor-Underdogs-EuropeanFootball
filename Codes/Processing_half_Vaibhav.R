@@ -316,3 +316,8 @@ final_df3 <- final_df3 %>%
 
 final_df3$Age <- as.numeric(final_df3$Year) - as.numeric(final_df3$Year_birth) 
 
+
+df_1623 <- df_1623[,-1]
+pre_model_data <- merge(final_df, df_1623, by= c('player_id', 'Year'))
+
+
