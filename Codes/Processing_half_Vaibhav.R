@@ -320,4 +320,48 @@ final_df3$Age <- as.numeric(final_df3$Year) - as.numeric(final_df3$Year_birth)
 df_1623 <- df_1623[,-1]
 pre_model_data <- merge(final_df, df_1623, by= c('player_id', 'Year'))
 
+mini_train <- head(pre_model_data, 2000)
 
+#Year
+pre_model_data$y2016 <- ifelse(pre_model_data$Year == '2016', 1,0)
+pre_model_data$y2017 <- ifelse(pre_model_data$Year == '2017', 1,0)
+pre_model_data$y2018 <- ifelse(pre_model_data$Year == '2018', 1,0)
+pre_model_data$y2019 <- ifelse(pre_model_data$Year == '2019', 1,0)
+pre_model_data$y2020 <- ifelse(pre_model_data$Year == '2020', 1,0)
+pre_model_data$y2021 <- ifelse(pre_model_data$Year == '2021', 1,0)
+pre_model_data$y2022 <- ifelse(pre_model_data$Year == '2022', 1,0)
+pre_model_data$y2023 <- ifelse(pre_model_data$Year == '2023', 1,0)
+
+
+#other
+pre_model_data$mapprear <- ifelse(pre_model_data$matches_appearances >=  quantile(pre_model_data$matches_appearances, 0.75) , 1,0)
+pre_model_data$yellow <- ifelse(pre_model_data$yellow_permatch >=  quantile(pre_model_data$yellow_permatch, 0.75), 1,0)
+pre_model_data$red <- ifelse(pre_model_data$red_permatch >=  quantile(pre_model_data$red_permatch, 0.75), 1,0)
+pre_model_data$goal <- ifelse(pre_model_data$goals_permatch >=  quantile(pre_model_data$goals_permatch, 0.75), 1,0)
+pre_model_data$assist <- ifelse(pre_model_data$assists_permatch >=  quantile(pre_model_data$assists_permatch, 0.75), 1,0)
+pre_model_data$min <- ifelse(pre_model_data$min_permatch >=  quantile(pre_model_data$min_permatch, 0.75), 1,0)
+
+#postion
+pre_model_data$attack <- ifelse(pre_model_data$position == 'Attack', 1,0)
+pre_model_data$def <- ifelse(pre_model_data$position  == 'Defender', 1,0)
+pre_model_data$goalkep <- ifelse(pre_model_data$position  == 'Goalkeeper', 1,0)
+pre_model_data$midfield <- ifelse(pre_model_data$position  == 'Midfield', 1,0)
+
+
+#foot 
+pre_model_data$rfoot <- ifelse(pre_model_data$foot  == 'Right', 1,0)
+
+pre_model_data$heightbinary <- ifelse(pre_model_data$height_in_cm >=  quantile(pre_model_data$height_in_cm, 0.75, na.rm = T), 1,0)
+pre_model_data$highwin <- ifelse(pre_model_data$win_percentage >=  quantile(pre_model_data$win_percentage, 0.75, na.rm = T), 1,0)
+
+pre_model_data$old <- ifelse(pre_model_data$Age >=  quantile(pre_model_data$Age, 0.75, na.rm = T), 1,0)
+pre_model_data$expensiveguy <- ifelse(pre_model_data$market_value_in_eur >=  quantile(pre_model_data$market_value_in_eur, 0.75, na.rm = T), 1,0)
+pre_model_data$lineuptime <- ifelse(pre_model_data$type_ratio >=  quantile(pre_model_data$type_ratio, 0.75, na.rm = T), 1,0)
+
+
+binary_convert <- pre_model_data %>% 
+  select(ever_captain:lineuptime, major_league, value_increase,club_changed)
+
+write.csv(binary_convert,'C:/Users/User/Downloads/binary_convert.csv', row.names = F)
+
+mini_train <- head(binary_convert, 2000)
