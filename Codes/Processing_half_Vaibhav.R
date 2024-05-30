@@ -365,3 +365,6 @@ binary_convert <- pre_model_data %>%
 write.csv(binary_convert,'C:/Users/User/Downloads/binary_convert.csv', row.names = F)
 
 mini_train <- head(binary_convert, 2000)
+
+binary_convert <- binary_convert %>% 
+  na.omit()
