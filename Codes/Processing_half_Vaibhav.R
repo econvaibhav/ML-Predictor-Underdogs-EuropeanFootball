@@ -136,9 +136,9 @@ image_url <- players %>%
   select(image_url, sub_position, position, foot)
 
 image_url2 <- image_url %>%
-  group_by(sub_position) %>%
+  group_by(position) %>%
   na.omit() %>% 
-  slice_sample(n = 420, replace = FALSE) 
+  slice_sample(n = 500, replace = FALSE) 
 
 print(sampled_data)
 
