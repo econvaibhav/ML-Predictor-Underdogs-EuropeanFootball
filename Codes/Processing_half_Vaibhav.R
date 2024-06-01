@@ -138,7 +138,7 @@ image_url <- players %>%
 image_url2 <- image_url %>%
   group_by(position) %>%
   na.omit() %>% 
-  slice_sample(n = 500, replace = FALSE) 
+  slice_sample(n = 30, replace = FALSE) 
 
 print(sampled_data)
 
