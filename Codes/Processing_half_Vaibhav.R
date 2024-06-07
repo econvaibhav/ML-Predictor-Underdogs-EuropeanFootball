@@ -135,10 +135,15 @@ final <- merge(player_valuations, players, by = c("player_id","current_club_id")
 image_url <- players %>% 
   select(image_url, sub_position, position, foot)
 
-image_url2 <- image_url %>%
+
+image_url2 <- image_url %>% 
+  filter(image_url != 'https://img.a.transfermarkt.technology/portrait/header/default.jpg?lm=1' )
+
+
+image_url2 <- image_url2 %>%
   group_by(position) %>%
   na.omit() %>% 
-  slice_sample(n = 30, replace = FALSE) 
+  slice_sample(n = 177, replace = FALSE) 
 
 print(sampled_data)
 
